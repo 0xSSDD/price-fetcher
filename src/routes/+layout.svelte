@@ -11,17 +11,11 @@
 </script>
 
 {#if $isInitialized}
-	{@render children()}
+	<div class="min-h-screen bg-[#0F1215] text-white flex items-center justify-center">
+		{@render children()}
+	</div>
 {:else}
-	<div class="loading">
+	<div class="min-h-screen bg-[#0F1215] text-gray-400 flex items-center justify-center">
 		Loading tokens...
 	</div>
 {/if}
-
-<style>
-	.loading {
-		text-align: center;
-		padding: 2rem;
-		color: #666;
-	}
-</style>

@@ -11,13 +11,13 @@
   }
 </script>
 
-<div class="min-w-[120px]">
+<div class="min-w-[140px]">
   {#if $isInitialized && $availableTokens.length > 0}
       <select
           id={type}
           bind:value={$store}
           on:change={handleChange}
-          class="w-full p-2 border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-4 py-2 bg-[#0F1215] border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#FFA500] focus:border-[#FFA500] appearance-none cursor-pointer"
       >
           {#each $availableTokens as token}
               <option value={token.name}>
@@ -28,7 +28,7 @@
   {:else}
       <select
           disabled
-          class="w-full p-2 border rounded-md bg-gray-100 cursor-wait opacity-70"
+          class="w-full px-4 py-2 bg-[#0F1215] border border-gray-700 rounded-lg text-gray-500 cursor-not-allowed"
       >
           <option>Loading...</option>
       </select>

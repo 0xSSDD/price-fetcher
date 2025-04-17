@@ -25,12 +25,12 @@
             $isLoading = false;
         }
     }
-  </script>
+</script>
 
-  <button
+<button
     on:click={fetchPrice}
-    class="mt-4 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded text-base cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+    class="px-6 py-2.5 bg-[#FFA500] hover:bg-[#FFB52E] text-black font-medium rounded-lg transition-colors duration-200 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed"
     disabled={$isLoading}
-  >
+>
     {$isLoading ? 'Fetching...' : 'Get Price'}
-  </button>
+</button>
