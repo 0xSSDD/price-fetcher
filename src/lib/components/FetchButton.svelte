@@ -1,58 +1,36 @@
 <script lang="ts">
-  import { selectedBase, selectedQuote, currentPrice, isLoading } from '$lib/stores/Currency';
+    import { selectedBase, selectedQuote, currentPrice, isLoading } from '$lib/stores/Currency';
 
-  async function fetchPrice() {
-      if (!$selectedBase || !$selectedQuote) {
-          console.error('Base or quote currency not selected');
-          return;
-      }
+    async function fetchPrice() {
+        if (!$selectedBase || !$selectedQuote) {
+            console.error('Base or quote currency not selected');
+            return;
+        }
 
-      try {
-          $isLoading = true;
-          const response = await fetch(`/api/prices/${$selectedBase.toLowerCase()}/${$selectedQuote.toLowerCase()}`);
-          const data = await response.json();
+        try {
+            $isLoading = true;
+            const response = await fetch(`/api/prices/${$selectedBase.toLowerCase()}/${$selectedQuote.toLowerCase()}`);
+            const data = await response.json();
 
-          if (response.ok) {
-              $currentPrice = data.rate;
-          } else {
-              console.error('Error:', data.error);
-              $currentPrice = null;
-          }
-      } catch (error) {
-          console.error('Failed to fetch price:', error);
-          $currentPrice = null;
-      } finally {
-          $isLoading = false;
-      }
-  }
-</script>
+            if (response.ok) {
+                $currentPrice = data.rate;
+            } else {
+                console.error('Error:', data.error);
+                $currentPrice = null;
+            }
+        } catch (error) {
+            console.error('Failed to fetch price:', error);
+            $currentPrice = null;
+        } finally {
+            $isLoading = false;
+        }
+    }
+  </script>
 
-<button
-  on:click={fetchPrice}
-  class="fetch-button"
-  disabled={$isLoading}
->
-  {$isLoading ? 'Fetching...' : 'Get Price'}
-</button>
-
-<style>
-  .fetch-button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #4a5568;
-      color: white;
-      border: none;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      font-size: 1rem;
-  }
-
-  .fetch-button:hover {
-      background-color: #2d3748;
-  }
-
-  .fetch-button:disabled {
-      background-color: #a0aec0;
-      cursor: not-allowed;
-  }
-</style>
+  <button
+    on:click={fetchPrice}
+    class="mt-4 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded text-base cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+    disabled={$isLoading}
+  >
+    {$isLoading ? 'Fetching...' : 'Get Price'}
+  </button>
