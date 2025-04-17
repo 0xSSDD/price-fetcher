@@ -15,25 +15,35 @@ vi.mock('postgres', () => ({
     })
 }));
 
+// Add these interfaces at the top of the file
+interface WhereQuery {
+    col: string;
+    val: string;
+}
+
+interface TokenData {
+    id: string;
+    name: string;
+    api_id: string;
+}
+
 // Mock drizzle with logging
 vi.mock('drizzle-orm/postgres-js', () => ({
     drizzle: () => ({
         select: () => ({
             from: () => ({
-                where: (query: any) => {
-                    // For token queries
+                where: (query: WhereQuery | WhereQuery[]) => {
                     if (!Array.isArray(query)) {
-                        const val = query.val;
-                        const mockTokens = {
+                        const mockTokens: Record<string, TokenData> = {
                             bitcoin: { id: '1', name: 'bitcoin', api_id: 'bitcoin' },
                             usdt: { id: '2', name: 'usdt', api_id: 'tether' }
                         };
-                        return Promise.resolve([mockTokens[val]].filter(Boolean));
+                        return Promise.resolve([mockTokens[query.val]].filter(Boolean));
                     }
-                    // For cache queries (using and())
+                    // For cache queries
                     return {
                         orderBy: () => ({
-                            limit: () => Promise.resolve([])  // Empty cache by default
+                            limit: () => Promise.resolve([])
                         })
                     };
                 }
@@ -47,8 +57,8 @@ vi.mock('drizzle-orm/postgres-js', () => ({
 
 // Mock drizzle-orm operators
 vi.mock('drizzle-orm', () => ({
-    eq: (col: string, val: string) => ({ col: 'name', val }),
-    and: (...conditions: any[]) => conditions,
+    eq: (col: string, val: string): WhereQuery => ({ col: 'name', val }),
+    and: (...conditions: WhereQuery[]): WhereQuery[] => conditions,
     sql: (template: string) => ({ template })
 }));
 
