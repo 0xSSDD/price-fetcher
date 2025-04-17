@@ -5,6 +5,12 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
+	server: {
+		host: true,
+		port: 5173,
+		strictPort: true,
+		origin: 'https://price.j16z.org'
+	},
 	test: {
 		workspace: [
 			{
