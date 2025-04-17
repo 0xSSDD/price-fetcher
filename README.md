@@ -2,6 +2,18 @@
 
 A SvelteKit application that fetches and displays cryptocurrency price pairs with caching support.
 
+## Live Demo & Production Deployment
+
+The application is live at [https://price.j16z.org](https://price.j16z.org)
+
+### Production Infrastructure
+
+- **Server**: Ubuntu VPS with Nginx reverse proxy
+- **Process Management**: PM2 for Node.js application management
+- **SSL**: Let's Encrypt SSL certificates with auto-renewal
+- **Domain**: Custom subdomain configuration with Hostinger DNS
+- **Reverse Proxy**: Nginx with WebSocket support for Vite HMR
+
 ## Features
 
 - Real-time cryptocurrency price fetching via CoinGecko API
@@ -121,14 +133,31 @@ Features:
 
 ## Tech Stack
 
-- SvelteKit
-- TypeScript
-- PostgreSQL with Drizzle ORM
-- Tailwind CSS
-- Vitest & Playwright for testing
+#### Frontend
+- SvelteKit for server-side rendering and routing
+- TypeScript for type safety
+- Tailwind CSS for responsive design
+- Vite for development and build optimization
+
+#### Backend
+- SvelteKit API routes for backend endpoints
+- PostgreSQL with Drizzle ORM for data persistence
+- Docker for database containerization
+- CoinGecko API integration for real-time pricing
+
+#### Testing & Quality
+- Vitest for unit and integration testing
+- Playwright for end-to-end testing
+- TypeScript for static type checking
+- ESLint and Prettier for code quality
+
+#### DevOps & Deployment
+- PM2 for process management and auto-restart
+- Nginx for reverse proxy and SSL termination
+- Docker Compose for database orchestration
 
 ## Potential Improvements & Future enhancements
-
+### Product
 - Add multiple price providers support
 - Consider moving to /api/prices?base=X&quote=Y format
 - Use API logging preesnt to monitor outages from Price providers
@@ -138,3 +167,33 @@ Features:
 - Make cache duration configurable
 - Consider query parameter format for price endpoint
 - Extract price fetching logic to service layer
+
+### Tech
+- Implement Redis caching layer for API responses
+- Add CDN integration for static assets
+- Optimize bundle size with dynamic imports
+- Implement service worker for offline support
+
+### Scalability
+- Set up load balancing with multiple PM2 instances
+- Implement database replication for read scaling
+- Add rate limiting for API endpoints
+- Configure automated database backups
+
+### Monitoring & Reliability
+- Add Prometheus/Grafana for metrics monitoring
+- Implement ELK stack for centralized logging
+- Set up uptime monitoring with Pingdom/UptimeRobot
+- Add error tracking with Sentry
+
+### Security
+- Implement API key authentication
+- Add rate limiting per IP/user
+- Regular security audits with OWASP guidelines
+- Set up automated vulnerability scanning
+
+### Developer Experience
+- Add Docker containerization for the entire application
+- Implement automated deployment pipelines
+- Add staging environment for testing
+- Improve local development setup with docker-compose
