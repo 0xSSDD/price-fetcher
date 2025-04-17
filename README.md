@@ -33,7 +33,7 @@ cp .env.example .env
 
 3. Start the database:
 ```bash
-npm run db:start # this will use docker to spin up the postgres DB
+npm run db:start
 npm run db:push   # Apply database schema
 npm run db:seed   # Seed initial token data
 ```

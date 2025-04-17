@@ -16,7 +16,7 @@
 		"test:frontend": "vitest src/lib/components/__tests__/FetchButton.test.ts",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright test",
-		"db:start": "docker compose up",
+		"db:start": "docker compose up -d",
 		"db:seed": "vite-node src/lib/server/db/seed.ts",
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
