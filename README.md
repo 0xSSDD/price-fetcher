@@ -33,7 +33,7 @@ cp .env.example .env
 
 3. Start the database:
 ```bash
-npm run db:start
+npm run db:start # this will use docker to spin up the postgres DB
 npm run db:push   # Apply database schema
 npm run db:seed   # Seed initial token data
 ```
@@ -61,24 +61,63 @@ npm run build
 npm run preview
 ```
 
-## API Documentation
+## Backend Architecture
 
-### GET /api/tokens
+### API Implementation
+The backend is implemented using SvelteKit's built-in API routes (`+server.ts` files), chosen for:
+- Seamless integration with the frontend
+- File-based routing
+- Built-in TypeScript support
+- Zero-config deployment
+- Efficient server/client code splitting
+
+### API Endpoints
+
+#### `GET /api/tokens`
 Returns list of available tokens.
 
-### GET /api/prices/[base]/[quote]
-Fetches price for a token pair with 5-minute cache.
+Response:
+```typescript
+[
+  {
+    id: string,       // UUID of the token
+    name: string,     // Token symbol (e.g., 'ton', 'usdt')
+    api_id: string,   // External API identifier
+    created_at: Date  // Token creation timestamp
+  }
+]
+```
 
-## Potential Improvements
+#### `GET /api/prices/[base]/[quote]`
+Fetches price for a token pair with built-in caching.
 
-- Add multiple price providers support
-- Use API logging preesnt to monitor outages from Price providers
-- Implement rate limiting
-- Add pagination for tokens endpoint
-- Include token metadata (decimals, full name)
-- Make cache duration configurable
-- Consider query parameter format for price endpoint
-- Extract price fetching logic to service layer
+Parameters:
+- `base`: Base token symbol (e.g., 'ton')
+- `quote`: Quote token symbol (e.g., 'usdt')
+- `refresh`: Optional query param to force cache refresh
+
+Response:
+```typescript
+{
+  pair: string,        // "base/quote"
+  rate: number,        // Exchange rate
+  timestamp: number,   // Unix timestamp
+  baseUsdPrice: number,
+  quoteUsdPrice: number
+}
+```
+
+Features:
+- 5-minute price caching using PostgreSQL
+- Error handling for invalid pairs
+- Logging for monitoring and debugging
+- External API integration with CoinGecko
+
+### Database
+- PostgreSQL with Drizzle ORM for type-safe queries
+- Token and price caching tables
+- Managed through Docker for development
+
 
 ## Tech Stack
 
@@ -87,3 +126,15 @@ Fetches price for a token pair with 5-minute cache.
 - PostgreSQL with Drizzle ORM
 - Tailwind CSS
 - Vitest & Playwright for testing
+
+## Potential Improvements & Future enhancements
+
+- Add multiple price providers support
+- Consider moving to /api/prices?base=X&quote=Y format
+- Use API logging preesnt to monitor outages from Price providers
+- Implement rate limiting
+- Add pagination for tokens endpoint
+- Include token metadata (decimals, full name)
+- Make cache duration configurable
+- Consider query parameter format for price endpoint
+- Extract price fetching logic to service layer

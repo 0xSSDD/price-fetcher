@@ -30,6 +30,7 @@ import { db } from '$lib/server/db';
  * - Consider moving to /api/prices?base=X&quote=Y format
  * - Extract price fetching logic to service layer
  * - Rate limit the API
+ * - Force fetch price using ?refresh=true
  */
 
 const coingeckoApiRoot = 'https://api.coingecko.com/api/v3/';
