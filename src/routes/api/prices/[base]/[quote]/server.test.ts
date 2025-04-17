@@ -1,4 +1,21 @@
-// src/routes/api/prices/[base]/[quote]/+server.test.ts
+/**
+ * Integration tests for the Price API endpoint.
+ * Tests the complete request/response cycle including database interactions and external API calls.
+ *
+ * Testing Strategy:
+ * 1. Database Mocking:
+ *    - Simulates token lookups and price caching
+ *    - Mocks both successful and failed token queries
+ *
+ * 2. External API Mocking:
+ *    - Mocks CoinGecko API responses
+ *    - Simulates price data for BTC/USDT pair
+ *
+ * @see Related Files:
+ * - src/routes/api/prices/[base]/[quote]/+server.ts - Main API implementation
+ * - src/lib/server/db/schema.ts - Database schema definitions
+ */
+
 import { describe, it, expect, vi } from 'vitest';
 import { GET } from './+server';
 import type { RequestEvent } from './$types';
