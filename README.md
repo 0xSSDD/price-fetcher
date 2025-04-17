@@ -72,6 +72,7 @@ Fetches price for a token pair with 5-minute cache.
 ## Potential Improvements
 
 - Add multiple price providers support
+- Use API logging preesnt to monitor outages from Price providers
 - Implement rate limiting
 - Add pagination for tokens endpoint
 - Include token metadata (decimals, full name)
